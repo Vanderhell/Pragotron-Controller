@@ -1,7 +1,7 @@
 # Pragotron Controller (ESP32)
 
-![Wiring diagram](img/wiring.png)
-![Clock](img/clock.png)
+![Wiring diagram](img/wiring.jpg)
+![Clock](img/clock.jpg)
 ![Web](img/web.png)
 
 Minute-impulse controller for a **Pragotron** (or similar stepper) clock using an **ESP32**, **DS1307 RTC**, and an **H-bridge**. It keeps local time, drives the coil with alternating A/B pulses, exposes a small web UI, and persists state/logs on SD.
