@@ -1,0 +1,17 @@
+{
+  "mode": "auto",
+  "wifi_ssid": "YOUR_SSID",
+  "wifi_password": "YOUR_PASSWORD",
+  "ntp_server": "pool.ntp.org",
+
+  "tz_mode": "posix",
+  "posix_tz": "CET-1CEST,M3.5.0/2,M10.5.0/3",
+
+  "impulse_delay_ms": 200,
+  "max_catchup_minutes": 1440,
+  "resync_rtc_if_diff_seconds": 60,
+  "ntp_resync_every_minutes": 60,
+
+  "web_edit_enabled": true,
+  "debug_serial": true
+}

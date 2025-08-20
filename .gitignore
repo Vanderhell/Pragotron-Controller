@@ -1,0 +1,33 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.code-workspace
+
+# Arduino/ESP32 build artifacts
+*.ino.cpp
+*.elf
+*.bin
+*.hex
+*.map
+*.eep
+*.o
+*.obj
+*.d
+
+# Config and logs (if stored outside sd_card)
+config.json
+logs/
+state.txt
+
+# Secrets
+*.secret
+*.secrets
+.env
+
+# Images to keep in repo
+!img/
+!img/*.png
+!img/*.jpg
+!img/*.webp

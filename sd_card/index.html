@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pragotron Controller</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🕒 Pragotron Controller</h1>
+
+        <div class="card">
+            <h2>System Status</h2>
+            <p><strong>IP address:</strong> <span id="ip">-</span></p>
+            <p><strong>Wi-Fi SSID:</strong> <span id="ssid">-</span></p>
+            <p><strong>Mode:</strong> <span id="mode">-</span></p>
+            <p><strong>RTC time:</strong> <span id="rtc">-</span></p>
+            <p><strong>Clock display time:</strong> <span id="clock">-</span></p>
+        </div>
+
+        <div class="card">
+            <h2>Log</h2>
+            <textarea id="logbox" readonly></textarea>
+            <button onclick="loadLog()">Load log</button>
+        </div>
+
+        <!-- replace the entire block "Manual clock time set" -->
+        <div class="card">
+          <h2>Manual Clock Time Set</h2>
+          <form onsubmit="setClock(event)">
+            <label>Clock time (HH:MM):</label><br>
+            <input type="time" id="newClockTime" required step="60" placeholder="14:30" pattern="^([01]\d|2[0-3]):[0-5]\d$">
+            <button type="submit">Set</button>
+          </form>
+          <p id="setClockStatus"></p>
+        </div>
+        
+    </div>
+
+    <script>
+        function loadStatus() {
+          fetch('/api/status')
+            .then(res => res.json())
+            .then(data => {
+              document.getElementById('ip').textContent    = data.device_ip;
+              document.getElementById('ssid').textContent  = data.wifi_ssid;
+              document.getElementById('mode').textContent  = data.mode;
+              document.getElementById('rtc').textContent   = data.rtc_time;
+              document.getElementById('clock').textContent = data.clock_time;
+
+              const preset = data.clock_time || data.rtc_time;
+              if (preset && /^[0-2]\d:[0-5]\d$/.test(preset)) {
+                document.getElementById('newClockTime').value = preset;
+              }
+            });
+        }
+
+        function loadLog() {
+            fetch('/api/log')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('logbox').value = data;
+                });
+        }
+
+        function setClock(event) {
+            event.preventDefault();
+            const input = document.getElementById('newClockTime').value.trim(); // "HH:MM"
+
+            if (!/^[0-2]\d:[0-5]\d$/.test(input)) {
+              document.getElementById('setClockStatus').textContent = 'Invalid format. Use HH:MM';
+              return;
+            }
+
+            fetch('/api/set-state', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ clock_time: input })
+            })
+            .then(res => res.text())
+            .then(msg => {
+              document.getElementById('setClockStatus').textContent = msg;
+              loadStatus();
+            });
+        }
+
+        loadStatus();
+    </script>
+</body>
+</html>

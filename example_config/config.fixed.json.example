@@ -1,0 +1,19 @@
+{
+  "mode": "auto",
+  "wifi_ssid": "YOUR_SSID",
+  "wifi_password": "YOUR_PASSWORD",
+  "ntp_server": "pool.ntp.org",
+
+  "tz_mode": "fixed",
+  "time_zone_offset_hrs": 2,
+  "time_zone_offset_min": 0,
+  "use_eu_dst": false,
+
+  "impulse_delay_ms": 200,
+  "max_catchup_minutes": 1440,
+  "resync_rtc_if_diff_seconds": 60,
+  "ntp_resync_every_minutes": 60,
+
+  "web_edit_enabled": true,
+  "debug_serial": true
+}
